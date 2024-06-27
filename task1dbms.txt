@@ -1,0 +1,106 @@
+Microsoft Windows [Version 10.0.22621.3447]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\titus>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.37 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> DROP DATABASE IF EXISTS inventorydb;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> CREATE DATABASE inventorydb;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE inventorydb;
+Database changed
+mysql> CREATE TABLE product (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     name VARCHAR(255),
+    ->     description TEXT,
+    ->     price DECIMAL(10, 2),
+    ->     quantity INT,
+    ->     category VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO product (name, description, price, quantity, category) VALUES
+    -> ('Laptop', 'A high-performance laptop suitable for all your computing needs.', 999.99, 50, 'Electronics'),
+    -> ('Desk Chair', 'Ergonomic desk chair with lumbar support.', 149.99, 200, 'Furniture'),
+    -> ('Running Shoes', 'Comfortable running shoes with excellent grip.', 79.99, 150, 'Footwear'),
+    -> ('Smartphone', 'Latest model smartphone with cutting-edge features.', 699.99, 75, 'Electronics'),
+    -> ('Blender', 'High-speed blender for smoothies and soups.', 89.99, 100, 'Kitchen Appliances');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM product;
++----+---------------+------------------------------------------------------------------+--------+----------+--------------------+
+| id | name          | description                                                      | price  | quantity | category           |
++----+---------------+------------------------------------------------------------------+--------+----------+--------------------+
+|  1 | Laptop        | A high-performance laptop suitable for all your computing needs. | 999.99 |       50 | Electronics        |
+|  2 | Desk Chair    | Ergonomic desk chair with lumbar support.                        | 149.99 |      200 | Furniture          |
+|  3 | Running Shoes | Comfortable running shoes with excellent grip.                   |  79.99 |      150 | Footwear           |
+|  4 | Smartphone    | Latest model smartphone with cutting-edge features.              | 699.99 |       75 | Electronics        |
+|  5 | Blender       | High-speed blender for smoothies and soups.                      |  89.99 |      100 | Kitchen Appliances |
++----+---------------+------------------------------------------------------------------+--------+----------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM product WHERE price >= 100;
++----+------------+------------------------------------------------------------------+--------+----------+-------------+
+| id | name       | description                                                      | price  | quantity | category    |
++----+------------+------------------------------------------------------------------+--------+----------+-------------+
+|  1 | Laptop     | A high-performance laptop suitable for all your computing needs. | 999.99 |       50 | Electronics |
+|  2 | Desk Chair | Ergonomic desk chair with lumbar support.                        | 149.99 |      200 | Furniture   |
+|  4 | Smartphone | Latest model smartphone with cutting-edge features.              | 699.99 |       75 | Electronics |
++----+------------+------------------------------------------------------------------+--------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM product WHERE price <= 700;
++----+---------------+-----------------------------------------------------+--------+----------+--------------------+
+| id | name          | description                                         | price  | quantity | category           |
++----+---------------+-----------------------------------------------------+--------+----------+--------------------+
+|  2 | Desk Chair    | Ergonomic desk chair with lumbar support.           | 149.99 |      200 | Furniture          |
+|  3 | Running Shoes | Comfortable running shoes with excellent grip.      |  79.99 |      150 | Footwear           |
+|  4 | Smartphone    | Latest model smartphone with cutting-edge features. | 699.99 |       75 | Electronics        |
+|  5 | Blender       | High-speed blender for smoothies and soups.         |  89.99 |      100 | Kitchen Appliances |
++----+---------------+-----------------------------------------------------+--------+----------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM product WHERE quantity >= 100;
++----+---------------+------------------------------------------------+--------+----------+--------------------+
+| id | name          | description                                    | price  | quantity | category           |
++----+---------------+------------------------------------------------+--------+----------+--------------------+
+|  2 | Desk Chair    | Ergonomic desk chair with lumbar support.      | 149.99 |      200 | Furniture          |
+|  3 | Running Shoes | Comfortable running shoes with excellent grip. |  79.99 |      150 | Footwear           |
+|  5 | Blender       | High-speed blender for smoothies and soups.    |  89.99 |      100 | Kitchen Appliances |
++----+---------------+------------------------------------------------+--------+----------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE product SET price = 80.00 WHERE name = 'Running Shoes';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DELETE FROM product WHERE name = 'Laptop';
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  SELECT * FROM product;
++----+---------------+-----------------------------------------------------+--------+----------+--------------------+
+| id | name          | description                                         | price  | quantity | category           |
++----+---------------+-----------------------------------------------------+--------+----------+--------------------+
+|  2 | Desk Chair    | Ergonomic desk chair with lumbar support.           | 149.99 |      200 | Furniture          |
+|  3 | Running Shoes | Comfortable running shoes with excellent grip.      |  80.00 |      150 | Footwear           |
+|  4 | Smartphone    | Latest model smartphone with cutting-edge features. | 699.99 |       75 | Electronics        |
+|  5 | Blender       | High-speed blender for smoothies and soups.         |  89.99 |      100 | Kitchen Appliances |
++----+---------------+-----------------------------------------------------+--------+----------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql>
